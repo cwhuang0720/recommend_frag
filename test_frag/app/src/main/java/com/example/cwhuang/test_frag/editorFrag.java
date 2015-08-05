@@ -13,36 +13,29 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nineoldandroids.animation.Animator;
+import com.nineoldandroids.animation.AnimatorInflater;
+
 /**
  * Created by cwhuang on 2015/8/3.
+ * Recommendation Fragment layout
  */
 public class editorFrag extends Fragment{
-        //implements View.OnClickListener {
+
 
     OnSelectListener mCallback;
 
     // Container Activity must implement this interface
     public interface OnSelectListener {
         public void onArticleSelected(String fragmentname);
-        public void onArticleSelected(int num,Fragment f);
+        public void onArticleSelected(int num,Fragment f,int layout_index);
     }
 
     Fragment editorFrag;
     private float mPosX,mCurPosX,mPosY,mCurPosY;
-    private String name = "";
-    private String LatLnt = "";
-    private String address = "";
     private Bundle obj = null;
     private String tag = "";
-
-    public editorFrag(){
-
-    }
-    public void set_location(String name, String LatLnt, String address){
-        this.name = name;
-        this.LatLnt = LatLnt;
-        this.address = address;
-    }
+    private int layout_index;
 
     @Override
     public void onAttach(Activity activity) {
@@ -65,15 +58,11 @@ public class editorFrag extends Fragment{
 
         // Inflate the layout for this fragment
         obj = getArguments();
-        /*String name = obj.getString("name");
-        String address = obj.getString("address");
-        String LatLnt = obj.getString("latlnt");
-        String url = obj.getString("url");
-        set_location(name, LatLnt, address);
-        return inflater.inflate(R.layout.fragment_2, container, false);*/
+
         int layout = obj.getInt("layout");
         tag = obj.getString("tag");
-        Log.d("TAG","!!"+layout+","+tag);
+        layout_index = obj.getInt("layout_index");
+        Log.d("TAG","!!"+layout+","+tag+","+layout_index);
         editorFrag = editorFrag.this.getFragmentManager().findFragmentByTag(tag);
         return inflater.inflate(layout, container, false);
     }
@@ -83,7 +72,6 @@ public class editorFrag extends Fragment{
         super.onViewCreated(view, savedInstanceState);  // 榜定按鈕事件
         setGestureListener(view);
 
-        //view.findViewById(R.id.fragment1).setOnClickListener(this);
     }
     private void setGestureListener(View v){
 
@@ -119,16 +107,17 @@ public class editorFrag extends Fragment{
                 case MotionEvent.ACTION_UP:
                     if (mCurPosX - mPosX > 0
                             && (Math.abs(mCurPosX - mPosX) > 25)
-                            && (Math.abs(mCurPosY - mPosY) < 25)){
+                            && (Math.abs(mCurPosY - mPosY) < 75)){
                         //向下滑動
-                        mCallback.onArticleSelected(1,editorFrag);
-
+                        mCallback.onArticleSelected(1,editorFrag,layout_index);
+                        //mCallback.onArticleSelected("one");
                         Log.d("TAG", "up !!u dont like it!!!"+mCurPosY+","+mPosY);
                     } else if (mCurPosX - mPosX < 0
                             && (Math.abs(mCurPosX - mPosX) > 25)
-                            && (Math.abs(mCurPosY - mPosY) < 25)) {
+                            && (Math.abs(mCurPosY - mPosY) < 75)) {
                         //向上滑動
-                        mCallback.onArticleSelected(2,editorFrag);
+                        mCallback.onArticleSelected(2,editorFrag,layout_index);
+                        //mCallback.onArticleSelected("two");
                         Log.d("TAG", "up !!u like it!!!"+mCurPosY+","+mPosY);
                     }
 

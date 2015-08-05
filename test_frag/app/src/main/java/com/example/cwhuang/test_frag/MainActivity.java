@@ -2,69 +2,94 @@ package com.example.cwhuang.test_frag;
 
 import android.app.FragmentManager;
 import android.support.v4.app.Fragment;
-import android.app.FragmentTransaction;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
+
+/*import com.nineoldandroids.animation.Animator;
+import com.nineoldandroids.animation.AnimatorListenerAdapter;
+import com.nineoldandroids.animation.ValueAnimator;
+import com.nineoldandroids.view.ViewHelper;
+import com.nineoldandroids.view.ViewPropertyAnimator;*/
 
 import java.util.ArrayList;
 
+/*
+ *  Main Activity
+ */
 
 public class MainActivity extends FragmentActivity
                 implements editorFrag.OnSelectListener{
 
     private ArrayList<Integer> layout_num = new ArrayList<Integer>();
-    private String tag = "";
     private Bundle args = null;
 
-
-    public void onArticleSelected(String frag_name) {}
-    public void onArticleSelected(int num,Fragment f) {
+    //OnselectListener Method with two OnArticleSelected
+    public void onArticleSelected(String frag_name) {
+        Log.d("TAG",frag_name+"!!!");
+    }
+    public void onArticleSelected(int num,Fragment old_frag,int layout_index) {
 
         Log.d("TAG","yo!!!"+num);
-        /*getSupportFragmentManager()
-                .beginTransaction()
-                        //.setCustomAnimations(R.anim.slide_in_left,R.anim.slide_out_right)
-                .hide(f)
-                .commit();
 
-        Log.d("TAG", "hide!!");*/
+        //layout_index
+        layout_index +=1;
 
-        tag = "second";
-        args = replace_layout(layout_num.get(1),tag);
-        editorFrag new_frag = new editorFrag();
-        new_frag.setArguments(args);
+        //how many layout
+        if(layout_index <9) {
+            //tag_name
+            String tag_str = String.valueOf(layout_index);
+            //set Bundle
+            args = replace_layout(layout_num.get(layout_index), tag_str, layout_index);
+            //set new fragment
+            editorFrag new_frag = new editorFrag();
+            new_frag.setArguments(args);
 
-        Log.d("TAG", "set bundle!!");
-        getSupportFragmentManager()
-                .beginTransaction()
-                .hide(f)
-                .add(R.id.fragment_container,new_frag)
-                .addToBackStack(null)
-                .commit();
-        Log.d("TAG", "replace!!");
+            //method1 : replace fragment with animation
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    //.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right)
+                    .setCustomAnimations(R.anim.fade_out, R.anim.fade_in)
+                    .replace(R.id.fragment_container, new_frag)
+                    .commit();
+
+            /*
+            //method2 : hide old fragment and add new fragment
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .hide(old_frag)
+                    .add(R.id.fragment_container, new_frag, tag_str)
+                    .addToBackStack(null)
+                    .commit();*/
+            Log.d("TAG", "hide:" + (layout_index - 1) + "add:" + layout_index+"!!");
+        }else{
+            Log.d("TAG","out of limit layout!!!");
+        }
 
 
     }
 
-    private Bundle replace_place(String name, String address,String latlnt){
+    private Bundle replace_layout(Integer layout,String tag,int layout_index){
         Bundle args = new Bundle();
-        args.putString("name",name);
-        args.putString("address",address);
-        args.putString("latlnt", latlnt);
+        args.putInt("layout", layout);
+        args.putInt("layout_index", layout_index);
+        args.putString("tag", tag);
+
         return args;
     }
 
-    private Bundle replace_layout(Integer layout,String tag){
-        Bundle args = new Bundle();
-        args.putInt("layout",layout);
-        args.putString("tag",tag);
-
-        return args;
+    private void add_layout(){
+        layout_num.add(R.layout.fragment_1);
+        layout_num.add(R.layout.fragment_2);
+        layout_num.add(R.layout.fragment_3);
+        layout_num.add(R.layout.fragment_4);
+        layout_num.add(R.layout.fragment_5);
+        layout_num.add(R.layout.fragment_6);
+        layout_num.add(R.layout.fragment_7);
+        layout_num.add(R.layout.fragment_8);
+        layout_num.add(R.layout.fragment_9);
     }
 
     @Override
@@ -72,9 +97,7 @@ public class MainActivity extends FragmentActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        layout_num.add(R.layout.fragment_1);
-        layout_num.add(R.layout.fragment_2);
-
+        add_layout();
 
         // Check that the activity is using the layout version with the fragment_container FrameLayout
         if(findViewById(R.id.fragment_container) != null)
@@ -88,49 +111,17 @@ public class MainActivity extends FragmentActivity
             editorFrag firstFrag = new editorFrag();
             editorFrag secondFrag = new editorFrag();
 
-            tag = "first";
-            args = replace_layout(layout_num.get(0),tag);
+            String tag_str = "0";
+            args = replace_layout(layout_num.get(0), tag_str,Integer.parseInt(tag_str));
             firstFrag.setArguments(args);
             // add fragment to the fragment container layout
             getSupportFragmentManager()
                     .beginTransaction()
-                            //.setCustomAnimations(R.anim.slide_in_left,R.anim.slide_out_right)
-                    .add(R.id.fragment_container, firstFrag, tag)
+                    .add(R.id.fragment_container, firstFrag, tag_str)
                     .addToBackStack(null)
                     .commit();
-            /*
-            tag = "second";
-            args = replace_layout(layout_num.get(1),tag);
-            firstFrag.setArguments(args);
-
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.fragment_container, secondFrag,tag)
-                    .hide(firstFrag)
-                    .addToBackStack(null)
-                    .commit();
-
-            Log.d("TAG", "add commit!!");*/
-            /*
-            args = replace_layout(layout_num.get(1));
-            firstFrag.setArguments(args);
-
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_container,firstFrag)
-                    .commit();
-            Log.d("TAG", "replace!!");
-            */
-            //remove
-            /*getSupportFragmentManager()
-                    .beginTransaction()
-                    .remove(firstFrag)
-                    .commit();
-            Log.d("TAG", "!!remove");*/
 
         }
-
-
 
     }
 
