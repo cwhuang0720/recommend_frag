@@ -82,10 +82,10 @@ public class MainActivity extends FragmentActivity
     }
 
     private void add_layout(){
-        layout_num.add(R.layout.fragment_2);
         layout_num.add(R.layout.fragment_3);
         layout_num.add(R.layout.fragment_4);
         layout_num.add(R.layout.fragment_5);
+        layout_num.add(R.layout.fragment_2);
         layout_num.add(R.layout.fragment_6);
         layout_num.add(R.layout.fragment_7);
         layout_num.add(R.layout.fragment_8);
@@ -113,8 +113,8 @@ public class MainActivity extends FragmentActivity
             editorFrag firstFrag = new editorFrag();
             //editorFrag secondFrag = new editorFrag();
 
-            String tag_str = "1";
-            args = replace_layout(layout_num.get(1), tag_str,Integer.parseInt(tag_str));
+            String tag_str = "0";
+            args = replace_layout(layout_num.get(0), tag_str,Integer.parseInt(tag_str));
             firstFrag.setArguments(args);
             // add fragment to the fragment container layout
             getSupportFragmentManager()

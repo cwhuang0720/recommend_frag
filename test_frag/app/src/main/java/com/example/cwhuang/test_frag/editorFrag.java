@@ -76,6 +76,7 @@ public class editorFrag extends Fragment{
         Log.d("TAG", "!!" + layout + "," + tag + "," + layout_index);
         editorFrag = editorFrag.this.getFragmentManager().findFragmentByTag(tag);
         return inflater.inflate(layout, container, false);
+
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -89,18 +90,9 @@ public class editorFrag extends Fragment{
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);  // 榜定按鈕事件
         //setGestureListener(view);
-        /*
-        if(getView().findViewById(R.id.icon_like)!=null && getView().findViewById(R.id.icon_dislike)!=null){
-            ImageView img_like = (ImageView) getView().findViewById(R.id.icon_like);
-            ImageView img_dislike = (ImageView) getView().findViewById(R.id.icon_dislike);
-            img_like.setOnTouchListener(likeListener);
-            img_dislike.setOnTouchListener(dislikeListener);
-            Log.d("TAG", "find it!!!");
-        }
-        */
 
         //set click event on imageview
-        if(getView().findViewById(R.id.icon_like)!=null &&
+        /*if(getView().findViewById(R.id.icon_like)!=null &&
            getView().findViewById(R.id.icon_cross)!=null &&
            getView().findViewById(R.id.icon_info)!=null) {
             ImageView img_click_like = (ImageView) getView().findViewById(R.id.icon_like);
@@ -109,10 +101,10 @@ public class editorFrag extends Fragment{
             img_click_dislike.setOnClickListener(click_dislike);
             ImageView img_click_info = (ImageView) getView().findViewById(R.id.icon_info);
             img_click_info.setOnClickListener(click_info);
-        }
-
-        /*getView().findViewById(R.id.restaurant).setOnTouchListener(new MyTouchListener());
-        getView().findViewById(R.id.restaurant).setOnDragListener(new MyDragListener());*/
+        }*/
+        getView().findViewById(R.id.icon_like).setOnClickListener(click_like);
+        getView().findViewById(R.id.icon_cross).setOnClickListener(click_dislike);
+        getView().findViewById(R.id.icon_info).setOnClickListener(click_info);
         getView().findViewById(R.id.restaurant).setOnTouchListener(_MyTouchListener);
         getView().findViewById(R.id.fragment).setOnDragListener(_MyDragListener);
 
@@ -131,12 +123,13 @@ public class editorFrag extends Fragment{
                 Log.d("TAG", "onTouch!!" + mPosX + "," + mPosY);
                 return true;
             } else {
-                Log.d("TAG", "noTouch!!");
+                Log.d("TAG", "NTouch!!");
                 return false;
             }
 
         }
     };
+
     private View.OnDragListener _MyDragListener = new View.OnDragListener() {
         @Override
         public boolean onDrag(View v, DragEvent event) {
@@ -151,6 +144,16 @@ public class editorFrag extends Fragment{
                     Log.d("TAG", "ACTION_DRAG_ENTERED!!");
                     break;
                 case DragEvent.ACTION_DRAG_EXITED:
+                    View _view = (View) event.getLocalState();
+                    View _view1 = getView().findViewById(R.id.button);
+                    ViewGroup _owner = (ViewGroup) _view.getParent();
+                    _owner.removeView(_view);
+                    _owner.removeView(_view1);
+                    LinearLayout _container = (LinearLayout) v;
+                    _container.addView(_view);
+                    _container.addView(_view1);
+                    _view.setVisibility(View.VISIBLE);
+
                     Log.d("TAG", "ACTION_DRAG_EXITED!!");
                     break;
                 case DragEvent.ACTION_DRAG_LOCATION:
@@ -159,6 +162,18 @@ public class editorFrag extends Fragment{
                 case DragEvent.ACTION_DROP:
                     // Dropped, reassign View to ViewGroup
 
+                    mCurPosX = event.getX();
+                    mCurPosY = event.getY();
+
+                    if (mCurPosX - mPosX < 0 && (Math.abs(mCurPosX - mPosX) > 600)) {
+                        //向上滑動
+                        mCallback.onArticleSelected(2,editorFrag,layout_index);
+                        Log.d("TAG", "up !!u dont like it!!!"+mCurPosY+","+mPosY);
+                    }else if (mCurPosX - mPosX > 0 && (Math.abs(mCurPosX - mPosX) > 600)) {
+                        //向上滑動
+                        mCallback.onArticleSelected(2,editorFrag,layout_index);
+                        Log.d("TAG", "up !!u like it!!!"+mCurPosY+","+mPosY);
+                    }
                     View view = (View) event.getLocalState();
                     View view1 = getView().findViewById(R.id.button);
                     ViewGroup owner = (ViewGroup) view.getParent();
@@ -168,17 +183,6 @@ public class editorFrag extends Fragment{
                     container.addView(view);
                     container.addView(view1);
                     view.setVisibility(View.VISIBLE);
-                    mCurPosX = event.getX();
-                    mCurPosY = event.getY();
-                    if (mCurPosX - mPosX < 0 && (Math.abs(mCurPosX - mPosX) > 300)) {
-                        //向上滑動
-                        mCallback.onArticleSelected(2,editorFrag,layout_index);
-                        Log.d("TAG", "up !!u dont like it!!!"+mCurPosY+","+mPosY);
-                    }else if (mCurPosX - mPosX > 0 && (Math.abs(mCurPosX - mPosX) > 300)) {
-                        //向上滑動
-                        mCallback.onArticleSelected(2,editorFrag,layout_index);
-                        Log.d("TAG", "up !!u like it!!!"+mCurPosY+","+mPosY);
-                    }
 
                     Log.d("TAG","ACTION_DROP!!"+mCurPosX+","+mCurPosY);
                     break;
@@ -201,9 +205,21 @@ public class editorFrag extends Fragment{
 
         public void onClick(View view){
             //宣告要作的行為
-            final Toast toast = Toast.makeText(view.getContext(),
+            mCallback.onArticleSelected(1, editorFrag, layout_index);
+            //mCallback.onArticleSelected("one");
+            Log.d("TAG", "up !!u like it!!!" + mCurPosY + "," + mPosY);
+
+
+            /*final Toast toast = Toast.makeText(view.getContext(),
                     "Like",
                     Toast.LENGTH_SHORT);
+            toast.show();*/
+
+            LayoutInflater inflater = LayoutInflater.from(getActivity());
+            View like = inflater.inflate(R.layout.like_show,
+                    (ViewGroup) getView().findViewById(R.id.like_show_content));
+            final Toast toast = new Toast(view.getContext());
+            toast.setView(like);
             toast.show();
 
             Handler handler = new Handler();
@@ -213,15 +229,28 @@ public class editorFrag extends Fragment{
                     toast.cancel();
                 }
             }, 200);
+
         }
     };
     private View.OnClickListener click_dislike = new View.OnClickListener() {
 
         public void onClick(View view){
             //宣告要作的行為
+
+            mCallback.onArticleSelected(1, editorFrag, layout_index);
+            //mCallback.onArticleSelected("one");
+            Log.d("TAG", "up !!u dont like it!!!" + mCurPosY + "," + mPosY);
+            /*
             final Toast toast = Toast.makeText(view.getContext(),
                     "Dislike",
                     Toast.LENGTH_SHORT);
+            toast.show();*/
+
+            LayoutInflater inflater = LayoutInflater.from(getActivity());
+            View dislike = inflater.inflate(R.layout.dislike_show,
+                    (ViewGroup) getView().findViewById(R.id.dislike_show_content));
+            final Toast toast = new Toast(view.getContext());
+            toast.setView(dislike);
             toast.show();
 
             Handler handler = new Handler();
@@ -237,6 +266,7 @@ public class editorFrag extends Fragment{
 
         public void onClick(View view){
             //宣告要作的行為
+
             final Toast toast = Toast.makeText(view.getContext(),
                     "info",
                     Toast.LENGTH_SHORT);
@@ -252,100 +282,29 @@ public class editorFrag extends Fragment{
         }
     };
 
-    private View.OnTouchListener likeListener = new View.OnTouchListener() {
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
-        private int mx,my;
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            // TODO Auto-generated method stub
-            switch (event.getAction()) {
-
-                case MotionEvent.ACTION_DOWN:
-                    mPosY = event.getY();
-                    mPosX = event.getX();
-                    break;
-                case MotionEvent.ACTION_MOVE:
-                    mCurPosX = event.getX();
-                    mCurPosY = event.getY();
-
-                    break;
-
-                case MotionEvent.ACTION_UP:
-                    if (mCurPosX - mPosX < 0
-                            && (Math.abs(mCurPosX - mPosX) > 25)
-                            && (Math.abs(mCurPosY - mPosY) < 75)) {
-                        //向上滑動
-                        //mCallback.onArticleSelected("two");
-                        Log.d("TAG", "up !!u like it!!!"+mCurPosY+","+mPosY);
-                        mx = (int)(event.getRawX()-mPosX);
-                        my = (int)(event.getRawY()-mPosY);
-                        v.layout(mx, my, mx + v.getWidth(), my + v.getHeight());
-
-                        mCallback.onArticleSelected(2, editorFrag, layout_index);
-                    }
-                    break;
-            }
-            Log.e("address", String.valueOf(mx) + "~~" + String.valueOf(my));
-            return true;
-        }
-
-    };
-    private View.OnTouchListener dislikeListener = new View.OnTouchListener() {
-
-        private int mx,my;
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            // TODO Auto-generated method stub
-            switch (event.getAction()) {
-
-                case MotionEvent.ACTION_DOWN:
-                    mPosX = event.getX();
-                    mPosY = event.getY();
-                    break;
-                case MotionEvent.ACTION_MOVE:
-                    mCurPosX = event.getX();
-                    mCurPosY = event.getY();
-
-                    break;
-
-                case MotionEvent.ACTION_UP:
-                    if (mCurPosX - mPosX > 0
-                            && (Math.abs(mCurPosX - mPosX) > 25)
-                            && (Math.abs(mCurPosY - mPosY) < 75)){
-                        //向上滑動
-                        Log.d("TAG", "up !!u dont like it!!!"+mCurPosY+","+mPosY);
-                        mx = (int)(event.getRawX()-mPosX);
-                        my = (int)(event.getRawY()-mPosY);
-                        v.layout(mx,my,mx+v.getWidth(),my+v.getHeight());
-
-                        mCallback.onArticleSelected(2, editorFrag, layout_index);
-                    }
-                    break;
-            }
-            Log.e("address", String.valueOf(mx) + "~~" + String.valueOf(my));
-            return true;
-        }
-
-    };
-
+    }
     private void setGestureListener(View v){
 
         v.setOnTouchListener(new View.OnTouchListener() {
 
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            // TODO Auto-generated method stub
-            switch (event.getAction()) {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // TODO Auto-generated method stub
+                switch (event.getAction()) {
 
-                case MotionEvent.ACTION_DOWN:
-                    mPosX = event.getX();
-                    mPosY = event.getY();
-                    break;
-                case MotionEvent.ACTION_MOVE:
-                    mCurPosX = event.getX();
-                    mCurPosY = event.getY();
+                    case MotionEvent.ACTION_DOWN:
+                        mPosX = event.getX();
+                        mPosY = event.getY();
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        mCurPosX = event.getX();
+                        mCurPosY = event.getY();
 
-                    break;
+                        break;
                 /*case MotionEvent.ACTION_UP:
                     if (mCurPosY - mPosY > 0
                             && (Math.abs(mCurPosY - mPosY) > 25)) {
@@ -359,36 +318,32 @@ public class editorFrag extends Fragment{
 
                     break;
                     */
-                case MotionEvent.ACTION_UP:
-                    if (mCurPosX - mPosX > 0
-                            && (Math.abs(mCurPosX - mPosX) > 25)
-                            && (Math.abs(mCurPosY - mPosY) < 75)){
-                        //向下滑動
-                        mCallback.onArticleSelected(1,editorFrag,layout_index);
-                        //mCallback.onArticleSelected("one");
-                        Log.d("TAG", "up !!u dont like it!!!"+mCurPosY+","+mPosY);
-                    } else if (mCurPosX - mPosX < 0
-                            && (Math.abs(mCurPosX - mPosX) > 25)
-                            && (Math.abs(mCurPosY - mPosY) < 75)) {
-                        //向上滑動
-                        mCallback.onArticleSelected(2,editorFrag,layout_index);
-                        //mCallback.onArticleSelected("two");
-                        Log.d("TAG", "up !!u like it!!!"+mCurPosY+","+mPosY);
-                    }
+                    case MotionEvent.ACTION_UP:
+                        if (mCurPosX - mPosX > 0
+                                && (Math.abs(mCurPosX - mPosX) > 25)
+                                && (Math.abs(mCurPosY - mPosY) < 75)) {
+                            //向下滑動
+                            mCallback.onArticleSelected(1, editorFrag, layout_index);
+                            //mCallback.onArticleSelected("one");
+                            Log.d("TAG", "up !!u dont like it!!!" + mCurPosY + "," + mPosY);
+                        } else if (mCurPosX - mPosX < 0
+                                && (Math.abs(mCurPosX - mPosX) > 25)
+                                && (Math.abs(mCurPosY - mPosY) < 75)) {
+                            //向上滑動
+                            mCallback.onArticleSelected(2, editorFrag, layout_index);
+                            //mCallback.onArticleSelected("two");
+                            Log.d("TAG", "up !!u like it!!!" + mCurPosY + "," + mPosY);
+                        }
 
-                    break;
+                        break;
+                }
+                return true;
             }
-            return true;
-        }
 
-    });
+        });
     }
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
 
-    }
 
 
 
