@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:scaleType="fitXY"
         android:layout_gravity="center_horizontal"
-        android:src="@drawable/d_7"
+        android:src="@drawable/image_4"
         />
     <TextView
         android:id="@+id/name_7"

@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 /*import com.nineoldandroids.animation.Animator;
@@ -38,7 +39,7 @@ public class MainActivity extends FragmentActivity
         layout_index +=1;
 
         //how many layout
-        if(layout_index <9) {
+        if(layout_index <5) {
             //tag_name
             String tag_str = String.valueOf(layout_index);
             //set Bundle
@@ -81,7 +82,6 @@ public class MainActivity extends FragmentActivity
     }
 
     private void add_layout(){
-        layout_num.add(R.layout.fragment_1);
         layout_num.add(R.layout.fragment_2);
         layout_num.add(R.layout.fragment_3);
         layout_num.add(R.layout.fragment_4);
@@ -89,6 +89,7 @@ public class MainActivity extends FragmentActivity
         layout_num.add(R.layout.fragment_6);
         layout_num.add(R.layout.fragment_7);
         layout_num.add(R.layout.fragment_8);
+        layout_num.add(R.layout.fragment_1);
         layout_num.add(R.layout.fragment_9);
     }
 
@@ -96,8 +97,8 @@ public class MainActivity extends FragmentActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         add_layout();
+
 
         // Check that the activity is using the layout version with the fragment_container FrameLayout
         if(findViewById(R.id.fragment_container) != null)
@@ -107,12 +108,13 @@ public class MainActivity extends FragmentActivity
             if(savedInstanceState != null)
                 return;
 
+
             // Create an instance of editorFrag
             editorFrag firstFrag = new editorFrag();
-            editorFrag secondFrag = new editorFrag();
+            //editorFrag secondFrag = new editorFrag();
 
-            String tag_str = "0";
-            args = replace_layout(layout_num.get(0), tag_str,Integer.parseInt(tag_str));
+            String tag_str = "1";
+            args = replace_layout(layout_num.get(1), tag_str,Integer.parseInt(tag_str));
             firstFrag.setArguments(args);
             // add fragment to the fragment container layout
             getSupportFragmentManager()
@@ -120,6 +122,8 @@ public class MainActivity extends FragmentActivity
                     .add(R.id.fragment_container, firstFrag, tag_str)
                     .addToBackStack(null)
                     .commit();
+
+
 
         }
 
@@ -130,6 +134,7 @@ public class MainActivity extends FragmentActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+
     }
 
     @Override
@@ -146,4 +151,5 @@ public class MainActivity extends FragmentActivity
 
         return super.onOptionsItemSelected(item);
     }
+
 }

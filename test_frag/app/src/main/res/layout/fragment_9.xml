@@ -1,37 +1,455 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <ImageView
-        android:id="@+id/imageView_9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:scaleType="fitXY"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    android:id="@+id/fragment1"
+    >
+    <!--android:background="@drawable/border_line"-->
+
+
+    <LinearLayout android:id="@+id/restaurant_img"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="210dp"
+        android:background="@drawable/eight"
+        android:scaleType="centerCrop"
         android:layout_gravity="center_horizontal"
-        android:src="@drawable/d_9"
-        />
-    <TextView
-        android:id="@+id/name_9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="50嵐"
-        android:textSize="20sp" />
-    <TextView
-        android:id="@+id/text_9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="231新北市新店區中正路205號"
-        android:textSize="20sp" />
-    <TextView
-        android:id="@+id/latlng_9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="24.972494,121.540197"
-        android:textSize="20sp" />
+        >
+        <RelativeLayout android:id="@+id/restaurant_title"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+            <LinearLayout android:id="@+id/restaurant_title_text"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:orientation="vertical"
+                android:paddingLeft="25dp"
+                android:layout_alignParentBottom="true"
+                android:background="#F8F8F8FF">
+                <!--android:background="#F8F8FF"-->
+                <TextView
+                    android:id="@+id/name_1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:gravity="center_vertical|left"
+                    android:text="八方雲集"
+                    android:textSize="20sp"
+                    android:textColor="#4f4f4f"
+                    android:textStyle="bold"
+                    />
+            </LinearLayout>
+
+            <LinearLayout android:id="@+id/background_progress"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="8dp"
+                android:background="#FAF8F8FF"
+                android:layout_alignParentBottom="true"
+                android:orientation="vertical">
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout android:id="@+id/content"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="180dp"
+        android:orientation="vertical"
+        android:background="#F8F8FF">
+
+        <LinearLayout android:id="@+id/content_upper"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="80dp"
+            >
+
+            <LinearLayout android:id="@+id/content_upper_left"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="25dp"
+                android:layout_weight="1">
+
+                <LinearLayout android:id="@+id/category_content"
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="27dp">
+
+                    <ImageView
+                        android:id="@+id/icon_food_category"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/icon_category"
+                        />
+                    <TextView
+                        android:id="@+id/text_food_category"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:paddingLeft="5dp"
+                        android:text="異國料理"
+                        android:textSize="13dp"
+                        android:textColor="#b8b8b8"/>
+
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/rating"
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp"
+                    android:paddingLeft="5dp">
+
+                    <TextView
+                        android:id="@+id/avg_rating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="綜合評分"
+                        android:textSize="15dp"
+                        android:textColor="#4f4f4f"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/how_many"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text=" (34 評)"
+                        android:textSize="14dp"
+                        android:textColor="#b8b8b8"/>
+
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/ratingbar"
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:paddingLeft="5dp">
+
+                    <RatingBar
+                        android:id="@+id/business_rating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="?android:attr/ratingBarStyleSmall"
+                        android:numStars="5"
+                        android:stepSize="0.5"
+                        android:rating="3.5" />
+                    <!--style="@android:style/Widget.Holo.RatingBar.Small"-->
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout android:id="@+id/content_upper_right"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="18dp"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/opentime_content"
+                    android:paddingLeft="5dp">
+
+
+                    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3">
+                        <TextView
+                            android:id="@+id/opentime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:text="營業時間"
+                            android:textSize="15dp"
+                            android:textColor="#4f4f4f"
+                            android:textStyle="bold"/>
+                    </LinearLayout>
+                    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2">
+
+                        <TextView
+                            android:id="@+id/opentime_data"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="暫無資料"
+                            android:textSize="15dp"
+                            android:textColor="#b8b8b8"
+                            android:layout_marginLeft="10dp"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="0.5dip"
+                    android:background="#F0D3D3D3" />
+
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="18dp"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/dayoff_content"
+                    android:paddingLeft="5dp">
+                    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3">
+                        <TextView
+                            android:id="@+id/dayoff"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:text="公休日"
+                            android:textSize="15dp"
+                            android:textColor="#4f4f4f"
+                            android:textStyle="bold"/>
+                    </LinearLayout>
+                    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2">
+                        <TextView
+                            android:id="@+id/dayoff_data"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="暫無資料"
+                            android:textSize="15dp"
+                            android:textColor="#b8b8b8"
+                            android:layout_marginLeft="10dp"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/dayoff_view"
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dip">
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#F0D3D3D3" />
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <LinearLayout android:id="@+id/view_img_content"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="2dip">
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="0.5dip"
+                android:background="#F0D3D3D3" />
+
+        </LinearLayout>
+
+
+        <LinearLayout android:id="@+id/content_phone"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:paddingLeft="25dp"
+            android:gravity="center_vertical"
+            >
+
+            <ImageView
+                android:id="@+id/phone_icon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/icon_phone"
+                />
+            <TextView
+                android:id="@+id/phone_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:text="02-2910-8082"
+                android:textSize="16dp"
+                android:textColor="#4f4f4f"
+                android:textStyle="bold"/>
+
+            <LinearLayout android:id="@+id/content_phone_arrow"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|right"
+                >
+                <ImageView
+                    android:id="@+id/icon_arrow"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/icon_arrow"
+                    android:paddingRight="5dp"
+                    />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/view_phone_address"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="2dip"
+            android:paddingLeft="28dp">
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="0.5dip"
+                android:background="#F0D3D3D3" />
+
+        </LinearLayout>
+
+
+        <LinearLayout android:id="@+id/content_address"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:paddingLeft="25dp"
+            android:gravity="center_vertical"
+            >
+
+            <ImageView
+                android:id="@+id/map_icon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/icon_map"
+                />
+
+            <TextView
+                android:id="@+id/text_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="新北市新店區北新路二段98號"
+                android:textSize="16dp"
+                android:textColor="#4f4f4f"
+                android:paddingLeft="10dp"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/view_address_like"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="2dip"
+            >
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="0.5dip"
+                android:background="#F0D3D3D3" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout android:id="@+id/like"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#F8F8FF"
+        >
+
+        <LinearLayout android:id="@+id/like_left"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical|right"
+            >
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="0.5dip"
+                android:background="#F0D3D3D3"
+                android:layout_marginRight="35dp"/>
+            <ImageView
+                android:id="@+id/icon_like"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/icon_like"
+                android:layout_marginRight="10dp"
+                />
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="0.5dip"
+                android:background="#F0D3D3D3"
+                android:layout_marginRight="35dp"/>
+
+            <ImageView
+                android:id="@+id/icon_onehand_left"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/icon_onehand_left"
+                />
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/like_right"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical|left">
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="0.5dip"
+                android:background="#F0D3D3D3"
+                android:layout_marginLeft="35dp"/>
+            <ImageView
+                android:id="@+id/icon_dislike"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/icon_dislike"
+                />
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="0.5dip"
+                android:background="#F0D3D3D3"
+                android:layout_marginLeft="35dp"/>
+            <ImageView
+                android:id="@+id/icon_onehand_right"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/icon_onehand_right"
+                />
+        </LinearLayout>
+
+
+    </LinearLayout>>
+
 
 </LinearLayout>
